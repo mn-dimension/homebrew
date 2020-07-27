@@ -45,7 +45,7 @@ class Minio < Formula
     puts `#{bin}/minio server -h`
   end
 
-plist_options :manual => "minio server"
+  plist_options :manual => "minio server"
 
   def plist
     <<~EOS

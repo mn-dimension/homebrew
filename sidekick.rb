@@ -11,6 +11,6 @@ class Sidekick < Formula
   sha256 "acf22136607e6d7eed72525b1c6cf0e569a2496c46c8a0e685e8f2e76a66ccf1"
 
   def install
-    bin.install Dir.glob("sidekick.*").first => "sidekick"
+    bin.install Dir.glob("sidekick*").first => "sidekick"
   end
 end
