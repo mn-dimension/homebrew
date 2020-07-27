@@ -5,13 +5,13 @@ Official [Homebrew](https://brew.sh/)/[Linuxbrew](http://linuxbrew.sh/) packages
 ## Install MinIO
 
 ```sh
-brew install minio/stable/minio
+brew install mn-dimension/minio
 ```
 
-## Install MinIO Client (mc)
+## Install Sidekick
 
 ```sh
-brew install minio/stable/mc
+brew install mn-dimension/sidekick
 ```
 
 ## Issues
