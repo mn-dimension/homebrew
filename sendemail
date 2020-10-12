@@ -30,12 +30,11 @@ for to in ${to_list}; do
 done
 IFS=' '
 
-message="Subject: ${subject}\n\n ${text}"
+message="Subject: ${subject}/n/n ${text}"
 echo Sending message:
 echo ---------
 echo To: $to_list
 echo ${message}
 echo ----------
 command="echo \"${message}\" | curl --ssl-reqd --silent --url smtps://smtp.gmail.com:465 --user ${user}:${app_password} --mail-from ${user} ${to_all} --upload-file ."
-echo $command
 eval $command
