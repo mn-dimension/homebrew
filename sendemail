@@ -30,7 +30,7 @@ for to in ${to_list}; do
 done
 IFS=' '
 
-message="$(printf 'Subject: %s/n/n %s' ${subject} ${text}"
+message="$(printf 'Subject: %s/n/n %s' ${subject} ${text})"
 echo Sending message:
 echo ---------
 echo To: $to_list
