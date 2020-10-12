@@ -27,7 +27,6 @@ IFS=','
 to_all=""
 for to in ${to_list}; do
   to_all="${to_all}--mail-rcpt $to "
-  echo ${to_all}
 done
 IFS=' '
 
