@@ -3,6 +3,8 @@ class Sendemail < Formula
   homepage "https://github.com/mn-dimension/homebrew-brew"
   url "https://github.com/mn-dimension/homebrew-brew"
   
+  bottle :unneeded
+  
   skip_clean 'bin'
 
   def install
