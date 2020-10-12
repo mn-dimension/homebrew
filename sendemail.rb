@@ -1,5 +1,5 @@
 class Sendemail < Formula
-  version '0.0.01'
+  version '0.1.00'
   homepage "https://github.com/mn-dimension/homebrew-brew"
   url 'https://github.com/mn-dimension/homebrew-brew.git'
   
