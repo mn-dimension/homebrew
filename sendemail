@@ -32,6 +32,6 @@ done
 IFS=' '
 
 message="Subject: ${subject}\n\n ${text}"
-echo "Sending message:\n---------\nTo: $to_list\n${message}\n----------\n "
+echo Sending message:\n---------\nTo: $to_list\n${message}\n----------\n
 command="echo \"${message}\" | curl --ssl-reqd --silent --url smtps://smtp.gmail.com:465 --user ${user}:${app_password} --mail-from ${user} ${to_all} --upload-file ."
 eval $command
