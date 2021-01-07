@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>dimension.copy.c8-data</string>
+	<string>dimension.archive-dropbox-prices</string>
 	<key>ProgramArguments</key>
 	<array>
 	<string>/usr/local/bin/archive-dropbox-prices</string>
