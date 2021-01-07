@@ -8,8 +8,7 @@ class Leinexec < Formula
   skip_clean 'bin'
 
   def install
-    bin.install 'lein-exec'
-    bin.install 'lein-exec-p'
+    bin.install Dir["script/lein-exec/lein*"]
   end
 
 end
