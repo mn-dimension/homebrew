@@ -7,7 +7,7 @@ days_to_keep_in_source_dir="$4"
 newest_destination_dir="${archive_dir}/newest"
 [ ! -d "${newest_destination_dir}" ] && mkdir "${newest_destination_dir}"
 
-echo "[$(date)] ========================Start================================="
+echo "========================= Start [$(date)] ================================="
 echo "Source: [${source_dir}]"
 echo "Archive: [${archive_dir}]"
 echo "Matching: [${matching_dir_pattern}]"
@@ -31,4 +31,4 @@ echo Moving all older than 2 days
 # Move all $source_dir folders $matching_dir_pattern older than $days_to_keep_in_source_dir to $archive_dir; this is safer than removing
 move_old_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" -mtime +$days_to_keep_in_source_dir -exec mv -f {} "${archive_dir}" \;)
 "${move_old_cmd[@]}"
-echo "[$(date)] ========================End================================="
+echo "========================= End [$(date)] ================================="
