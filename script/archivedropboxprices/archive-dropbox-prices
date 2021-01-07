@@ -13,22 +13,22 @@ echo "Archive: [${archive_dir}]"
 echo "Matching: [${matching_dir_pattern}]"
 echo "Days: [${days_to_keep_in_source_dir}]"
 echo "Newest: [${newest_destination_dir}]"
-echo "========================================================================"
 
-echo Copying newest
+echo Updating newest
 # Copy the any newer files in the $newest_dir in $source_dir to the $newest_destination_dir
 find_newest_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" )
 newest_dir="$("${find_newest_cmd[@]}" | sort | tail -1)"
-copy_newest_cmd=("/usr/local/bin/gfind" "${newest_dir}" -type f -exec "/usr/local/opt/coreutils/bin/gcp" --update -p {} "${newest_destination_dir}" \;)
+echo From ${newest_dir}
+copy_newest_cmd=("/usr/local/bin/gfind" "${newest_dir}" -type f -exec echo {} \; -exec "/usr/local/opt/coreutils/bin/gcp" --update -p {} "${newest_destination_dir}" \;)
 "${copy_newest_cmd[@]}"
 
-echo Copying all
+echo Copying all if newer
 # Copy all new $source_dir directories $matching_dir_pattern to the $archive_dir
-copy_all_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" -exec "/usr/local/opt/coreutils/bin/gcp" -R --update -p {} "${archive_dir}" \;)
+copy_all_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" -exec echo {} \; -exec "/usr/local/opt/coreutils/bin/gcp" -R --update -p {} "${archive_dir}" \;)
 "${copy_all_cmd[@]}"
 
 echo Moving all older than 2 days
 # Move all $source_dir folders $matching_dir_pattern older than $days_to_keep_in_source_dir to $archive_dir; this is safer than removing
-move_old_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" -mtime +$days_to_keep_in_source_dir -exec mv -f {} "${archive_dir}" \;)
+move_old_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" -mtime +$days_to_keep_in_source_dir -exec echo {} \; -exec mv -f {} "${archive_dir}" \;)
 "${move_old_cmd[@]}"
 echo "========================= End [$(date)] ================================="
