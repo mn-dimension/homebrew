@@ -7,9 +7,9 @@
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/updatelatestprices</string>
-		<string>/tmp/data</string>
+    <string>/tmp/watch</string>
 		<string>updatedC*</string>
-		<string>/tmp/latest</string>
+    <string>/tmp/latest</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
@@ -22,23 +22,19 @@
 		<dict>
 			<key>Hour</key>
 			<integer>9</integer>
-		</dict>
-		<dict>
-			<key>Hour</key>
-			<integer>10</integer>
+			<key>Minute</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>Hour</key>
 			<integer>11</integer>
+			<key>Minute</key>
+			<integer>0</integer>
 		</dict>
-		<dict>
-			<key>Hour</key>
-			<integer>15</integer>
-		</dict>
-		<dict>
-			<key>Hour</key>
-			<integer>22</integer>
-		</dict>
+	</array>
+	<key>WatchPaths</key>
+	<array>
+    <string>/tmp/watch</string>
 	</array>
 </dict>
 </plist>

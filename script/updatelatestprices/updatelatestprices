@@ -3,17 +3,21 @@
 source_dir="$1"
 matching_dir_pattern="$2"
 latest_destination_dir="$3"
+seconds=${4:-5}
+
 [ ! -d "${latest_destination_dir}" ] && mkdir "${latest_destination_dir}"
 
 echo "========================= Start [$(date)] ================================="
 echo "Source: [${source_dir}]"
 echo "Matching: [${matching_dir_pattern}]"
 echo "Latest: [${latest_destination_dir}]"
+echo "Waiting for ${seconds} seconds"
 
+sleep "${seconds}"
 echo Updating latest
 # Copy the any newer files in the $latest_dir in $source_dir to the $latest_destination_dir
 find_newest_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" )
 latest_dir="$("${find_newest_cmd[@]}" | sort | tail -1)"
 echo From ${latest_dir}
-rsync --archive --checksum --verbose "${latest_dir}"/* "${latest_destination_dir}"
+rsync -lpgoD --checksum --verbose "${latest_dir}"/* "${latest_destination_dir}"
 echo "========================= End [$(date)] ================================="
