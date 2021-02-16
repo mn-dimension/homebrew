@@ -18,6 +18,14 @@ echo Updating latest
 # Copy the any newer files in the $latest_dir in $source_dir to the $latest_destination_dir
 find_newest_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" )
 latest_dir="$("${find_newest_cmd[@]}" | sort | tail -1)"
-echo From ${latest_dir}
-rsync -a --verbose "${latest_dir}"/* "${latest_destination_dir}"
+echo "From ${latest_dir}"
+tag=${latest_dir##*/}
+if [[ ! -f "${latest_destination_dir}"/"${tag}" ]]; then
+  echo "Wiping and setting latest tag to ${tag}"
+  rm -f  "${latest_destination_dir}"/*
+  touch ${latest_destination_dir}/${tag}
+else
+  echo "Found latest tag ${tag}"
+fi
+rsync -a -c --verbose "${latest_dir}"/* "${latest_destination_dir}"
 echo "========================= End [$(date)] ================================="
