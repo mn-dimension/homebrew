@@ -19,7 +19,7 @@ echo Updating latest
 find_newest_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" )
 latest_dir="$("${find_newest_cmd[@]}" | sort | tail -1)"
 echo "From ${latest_dir}"
-tag=${latest_dir##*/}
+tag="tag.${latest_dir##*/*_}"
 if [[ ! -f "${latest_destination_dir}"/"${tag}" ]]; then
   echo "Wiping and setting latest tag to ${tag}"
   rm -f  "${latest_destination_dir}"/*
