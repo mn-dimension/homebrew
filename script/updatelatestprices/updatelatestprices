@@ -4,6 +4,7 @@ source_dir="$1"
 matching_dir_pattern="$2"
 latest_destination_dir="$3"
 seconds=${4:-5}
+slack_url=${5}
 
 [ ! -d "${latest_destination_dir}" ] && mkdir "${latest_destination_dir}"
 
@@ -19,13 +20,17 @@ echo Updating latest
 find_newest_cmd=("/usr/local/bin/gfind" "${source_dir}" -maxdepth 1 -mindepth 1 -type d -name "${matching_dir_pattern}" )
 latest_dir="$("${find_newest_cmd[@]}" | sort | tail -1)"
 echo "From ${latest_dir}"
-tag="tag.${latest_dir##*/*_}"
-if [[ ! -f "${latest_destination_dir}"/"${tag}" ]]; then
-  echo "Wiping and setting latest tag to ${tag}"
+data_id="id.${latest_dir##*/*_}"
+if [[ ! -f "${latest_destination_dir}"/"${data_id}" ]]; then
+  echo "Wiping and setting latest id to ${data_id}"
   rm -f  "${latest_destination_dir}"/*
-  touch ${latest_destination_dir}/${tag}
+  touch ${latest_destination_dir}/${data_id}
+  if [ -n "$slack_url" ]; then
+    data='{"text":"New Data Set Landed '${data_id}\"'}'
+    curl -X POST -H 'Content-type: application/json' --data "${data}" "${slack_url}"
+  fi
 else
-  echo "Found latest tag ${tag}"
+  echo "Found latest id ${data_id}"
 fi
 rsync -a -c --verbose "${latest_dir}"/* "${latest_destination_dir}"
 echo "========================= End [$(date)] ================================="
