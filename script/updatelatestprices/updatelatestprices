@@ -3,8 +3,10 @@
 source_dir="$1"
 matching_dir_pattern="$2"
 latest_destination_dir="$3"
-seconds=${4:-5}
-slack_url=${5}
+slack_channel=${4:-data}
+seconds=${5:-5}
+dimesnion_storage=${6:-"/Users/matthew.newland/Resilio Sync/dimension"}
+secret="${dimesnion_storage}/.slack.${slack_channel}"
 
 [ ! -d "${latest_destination_dir}" ] && mkdir "${latest_destination_dir}"
 
@@ -25,8 +27,10 @@ if [[ ! -f "${latest_destination_dir}"/"${data_id}" ]]; then
   echo "Wiping and setting latest id to ${data_id}"
   rm -f  "${latest_destination_dir}"/*
   touch ${latest_destination_dir}/${data_id}
-  if [ -n "$slack_url" ]; then
+  if [[ -f "$secret" ]]; then
+    slack_url="$(cat "$secret")"
     data='{"text":"New Data Set Landed '${data_id}\"'}'
+    echo Sending slack message "$data" to channel ${slack_channel}
     curl -X POST -H 'Content-type: application/json' --data "${data}" "${slack_url}"
   fi
 else
