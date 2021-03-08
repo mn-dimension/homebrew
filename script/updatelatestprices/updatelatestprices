@@ -8,7 +8,7 @@ seconds=${5:-5}
 dimesnion_storage=${6:-"/Users/matthew.newland/Resilio Sync/dimension"}
 secret="${dimesnion_storage}/.slack.${slack_channel}"
 
-[ ! -d "${latest_destination_dir}" ] && mkdir "${latest_destination_dir}"
+[ ! -d "${latest_destination_dir}/trigger" ] && mkdir -p "${latest_destination_dir}/trigger"
 
 echo "========================= Start [$(date)] ================================="
 echo "Source: [${source_dir}]"

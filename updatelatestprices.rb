@@ -1,5 +1,5 @@
 class Updatelatestprices < Formula
-  version '0.1.09'
+version '0.1.10'
   homepage "https://github.com/mn-dimension/homebrew-brew"
   url 'https://github.com/mn-dimension/homebrew-brew.git'
 

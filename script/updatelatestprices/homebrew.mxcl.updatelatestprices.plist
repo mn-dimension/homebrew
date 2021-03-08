@@ -34,7 +34,7 @@
 	</array>
 	<key>WatchPaths</key>
 	<array>
-    <string>/tmp/watch</string>
+    <string>/tmp/latest-destination_dir/trigger</string>
 	</array>
 </dict>
 </plist>
