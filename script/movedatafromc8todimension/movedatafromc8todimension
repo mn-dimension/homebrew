@@ -14,58 +14,58 @@ move_threshold_days=5
 clear
 
 # output line of 100 equals signs (dividing line)
-printf '=%.0s' {1..100} | tee -a $log_file
-echo "" | tee -a $log_file
+printf '=%.0s' {1..100} | tee -a "${log_file}"
+echo "" | tee -a "${log_file}"
 
-echo "Moving Data From C8 Resilio folder to Dimension Resilio folder" | tee -a $log_file
+echo "Moving Data From C8 Resilio folder to Dimension Resilio folder" | tee -a "${log_file}"
 
-echo "log_file = $log_file" | tee -a $log_file
-echo "source_root = $source_root" | tee -a $log_file
-echo "target_root = $target_root" | tee -a $log_file
-echo "move_threshold_days = $move_threshold_days" | tee -a $log_file
+echo "log_file = "${log_file}"" | tee -a $log_file
+echo "source_root = $source_root" | tee -a "${log_file}"
+echo "target_root = $target_root" | tee -a "${log_file}"
+echo "move_threshold_days = $move_threshold_days" | tee -a "${log_file}"
 
 printf '=%.0s' {1..100}
 echo ""
-date | tee -a $log_file
-echo "Copying C8 data to Dimension data" | tee -a $log_file
-echo "Copying files newer than $move_threshold_days days" | tee -a $log_file
-echo "Moving files older than $move_threshold_days days" | tee -a $log_file
-SOURCEDIRS=$(find $source_root -type d) # -name test)
-for sourceDir in $SOURCEDIRS; do
-	finalDirName="$(basename $sourceDir)"
-	targetDir=$target_root/$finalDirName
-	echo $sourceDir " => " $targetDir | tee -a $log_file
+date | tee -a "${log_file}"
+echo "Copying C8 data to Dimension data" | tee -a "${log_file}"
+echo "Copying files newer than $move_threshold_days days" | tee -a "${log_file}"
+echo "Moving files older than $move_threshold_days days" | tee -a "${log_file}"
+SOURCEDIRS=$(find "$source_root" -type d) # -name test)
+for sourceDir in "$SOURCEDIRS"; do
+	finalDirName="$(basename "$sourceDir")"
+	targetDir="$target_root/$finalDirName"
+	echo "$sourceDir  =>  $targetDir" | tee -a "${log_file}"
 
 	# make new target directory
-	mkdir -pv $targetDir | tee -a $log_file
+	mkdir -pv "$targetDir" | tee -a "${log_file}"
 
 	# copy new files
-	find $sourceDir -mtime -$move_threshold_days -type f -exec cp -np {} $targetDir \; | tee -a $log_file
+	find "$sourceDir" -mtime -$move_threshold_days -type f -exec cp -np {} "$targetDir" \; | tee -a "${log_file}"
 
 	# move old files
-	find $sourceDir -mtime +$move_threshold_days -type f -exec mv -v {} $targetDir \; | tee -a $log_file  # moves directory (and contents)
+	find "$sourceDir" -mtime +$move_threshold_days -type f -exec mv -v {} "$targetDir" \; | tee -a "${log_file}"  # moves directory (and contents)
 
 done
 
 # delete empty subdirectories (of any age)
-emptySubdirectories=$(find $source_root -type d -empty)
-numEmptySubdirectories=$(echo $emptySubdirectories | wc -c)
-echo "Deleting $numEmptySubdirectories empty subdirectories" | tee -a $log_file
-echo $emptySubdirectories
+emptySubdirectories=$(find "$source_root" -type d -empty)
+numEmptySubdirectories=$(echo "$emptySubdirectories" | wc -c)
+echo "Deleting $numEmptySubdirectories empty subdirectories" | tee -a "${log_file}"
+echo "$emptySubdirectories"
 
-for emptySubDirectory in $emptySubdirectories; do
+for emptySubDirectory in "$emptySubdirectories"; do
 	# double-check directory exists
 	if [ -d "$emptySubDirectory" ]; then
 		# double-check directory is empty
-		if [ -z "$(ls -A $emptySubDirectory)" ]; then
-  			echo "Deleting: " $emptySubDirectory
-  			echo rmdir $emptySubDirectory
-  			rmdir $emptySubDirectory
+		if [ -z "$(ls -A "$emptySubDirectory")" ]; then
+  			echo "Deleting:  $emptySubDirectory"
+  			echo "rmdir $emptySubDirectory"
+  			rmdir "$emptySubDirectory"
 		else
-  			echo "Not deleting as it is not empty: " $emptySubDirectory
+  			echo "Not deleting as it is not empty:  $emptySubDirectory"
 		fi
 	else
-		echo "Cannot delete subdirectory that does not exist: " $emptySubDirectory
+		echo "Cannot delete subdirectory that does not exist:  $emptySubDirectory"
 	fi
 done
 
@@ -73,19 +73,19 @@ done
 # 	echo "Deleting " $numEmptySubdirectories " empty subdirectories"
 # 	echo $emptySubdirectories
 # 	# delete empty subdirectories
-# 	# find $sourceDir -mtime +$move_threshold_days -type f -exec rmdir {} \; | tee -a $log_file  # removes directory (and contents)
+# 	# find $sourceDir -mtime +$move_threshold_days -type f -exec rmdir {} \; | tee -a "${log_file}"  # removes directory (and contents)
 # 	find $source_root -type d -empty -print
 # 	echo find $source_root -type d -empty -exec rmdir {} \;
-# 	find $source_root -type d -empty -exec rmdir {} \; | tee -a $log_file  # removes directory (and contents)
+# 	find $source_root -type d -empty -exec rmdir {} \; | tee -a "${log_file}"  # removes directory (and contents)
 # else
 # 	echo "No empty subdirectories (nothing to delete)"
 # fi
 
 printf '=%.0s' {1..100}
 echo ""
-date | tee -a $log_file
-echo "FINISHED"  | tee -a $log_file
+date | tee -a "${log_file}"
+echo "FINISHED"  | tee -a "${log_file}"
 
 # output line of 100 equals signs (dividing line)
-printf '=%.0s' {1..100} | tee -a $log_file
-echo "" | tee -a $log_file
+printf '=%.0s' {1..100} | tee -a "${log_file}"
+echo "" | tee -a "${log_file}"
