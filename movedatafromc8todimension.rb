@@ -1,5 +1,5 @@
 class Movedatafromc8todimension < Formula
-version '0.0.7'
+version '0.0.8'
   homepage "https://github.com/mn-dimension/homebrew-brew"
   url 'https://github.com/mn-dimension/homebrew-brew.git'
 
