@@ -3,7 +3,7 @@
 # Config
 source_root=${1:-"$HOME/Resilio Sync/c8data-feed/"}
 target_root=${2:-"$HOME/Resilio Sync/dimension/data/c8"}
-matching_dir_pattern="$(3:-"updated*")"
+matching_dir_pattern=${3:-"updated*"}
 
 # Set up dated logfile name
 NOW=$(date +"%F")
