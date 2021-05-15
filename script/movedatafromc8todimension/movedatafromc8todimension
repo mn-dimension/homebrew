@@ -12,8 +12,6 @@ log_file="${target_root}/scripts/$LOGFILE.log"
 
 move_threshold_days=5
 
-clear
-
 # output line of 100 equals signs (dividing line)
 printf '=%.0s' {1..100} | tee -a "${log_file}"
 echo "" | tee -a "${log_file}"
@@ -32,8 +30,8 @@ echo "Copying C8 data to Dimension data" | tee -a "${log_file}"
 echo "Copying files newer than $move_threshold_days days" | tee -a "${log_file}"
 echo "Moving files older than $move_threshold_days days" | tee -a "${log_file}"
 cd "$source_root"
-SOURCEDIRS=$(find "${matching_dir_pattern}" -type d)
-for sourceDir in "$SOURCEDIRS"; do
+SOURCEDIRS=($(find . -maxdepth 1 -name "${matching_dir_pattern}" -type d))
+for sourceDir in ${SOURCEDIRS[@]}; do
 	finalDirName="$(basename "$sourceDir")"
 	targetDir="$target_root/$finalDirName"
 	echo "$sourceDir  =>  $targetDir" | tee -a "${log_file}"
@@ -46,16 +44,12 @@ for sourceDir in "$SOURCEDIRS"; do
 
 	# move old files
 	find "$sourceDir" -mtime +$move_threshold_days -type f -exec mv -v {} "$targetDir" \; | tee -a "${log_file}"  # moves directory (and contents)
-
 done
 
 # delete empty subdirectories (of any age)
-emptySubdirectories=$(find "${matching_dir_pattern}" -type d -empty)
-numEmptySubdirectories=$(echo "$emptySubdirectories" | wc -c)
-echo "Deleting $numEmptySubdirectories empty subdirectories" | tee -a "${log_file}"
-echo "$emptySubdirectories"
-
-for emptySubDirectory in "$emptySubdirectories"; do
+emptySubdirectories=($(find . -maxdepth 1 -name "${matching_dir_pattern}" -type d -empty))
+echo "Deleting ${#emptySubdirectories[@]} empty subdirectories" | tee -a "${log_file}"
+for emptySubDirectory in ${emptySubdirectories[@]}; do
 	# double-check directory exists
 	if [ -d "$emptySubDirectory" ]; then
 		# double-check directory is empty
