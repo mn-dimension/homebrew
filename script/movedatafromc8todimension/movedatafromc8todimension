@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Config
-source_root=${1:-"$HOME/Resilio Sync/c8data-feed/"}
-target_root=${2:-"$HOME/Resilio Sync/dimension/data/c8"}
+source_root=$(eval echo ${1:-"$HOME/Resilio Sync/c8data-feed/"})
+target_root=$(eval echo ${2:-"$HOME/Resilio Sync/dimension/data/c8"})
 matching_dir_pattern=${3:-"updated*"}
 
 # Set up dated logfile name

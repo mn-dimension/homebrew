@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>technology.dimension.movedatafromc8todimension.sh</string>
+	<string>homebrew.mxcl.movedatafromc8todimension</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>sh</string>
-		<string>-c</string>
-		<string>/Users/doowell/Resilio/dimension/data/c8/scripts/MoveDataFromC8ToDimension.sh</string>
+		<string>/usr/local/bin/movedatafromc8todimension</string>
+		<string>$HOME/Resilio Sync/c8data-feed/</string>
+		<string>$HOME/Resilio Sync/dimension/data/c8</string>
+		<string>updated*</string>
 	</array>
-	<key>RootDirectory</key>
-	<string>/Users/doowell/Resilio/dimension/data/c8/scripts</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/tmp/dimension.movedatafromc8todimension.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/tmp/dimension.movedatafromc8todimension.stdout</string>
 	<key>StartCalendarInterval</key>
-	<dict>
-		<key>Hour</key>
-		<integer>1</integer>
-	</dict>
-	<key>WorkingDirectory</key>
-	<string>/Users/doowell/Resilio/dimension/data/c8</string>
+	<array>
+		<dict>
+			<key>Minute</key>
+			<integer>0</integer>
+		</dict>
+	</array>
 </dict>
 </plist>
