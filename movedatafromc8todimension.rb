@@ -1,9 +1,8 @@
 class Movedatafromc8todimension < Formula
-version '0.1.0'
+version '0.1.01'
   homepage "https://github.com/mn-dimension/homebrew-brew"
   url 'https://github.com/mn-dimension/homebrew-brew.git'
 
-  bottle :unneeded
   skip_clean 'bin'
 
   def install
